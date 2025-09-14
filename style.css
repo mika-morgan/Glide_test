@@ -53,6 +53,27 @@ button:disabled { opacity: 0.6; cursor: not-allowed; }
   background: #0b0e14;
   color: #e6edf3;
 }
+.var-toolbar {
+  display: flex;
+  gap: 6px;
+  padding: 6px 8px;
+  border-top: 1px solid var(--border);
+  background: #fafafc;
+}
+
+.var-toolbar button {
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.var-toolbar button:hover {
+  background: #f0f0f5;
+}
+
 .status {
   padding: 8px 12px; font-size: 12px; color: #666;
   border-top: 1px solid var(--border);

@@ -176,6 +176,19 @@ function updateVariables() {
   }
 }
 
+document.getElementById("stepBtn").addEventListener("click", () => {
+  console.log("Step clicked");
+});
+
+document.getElementById("runToEndBtn").addEventListener("click", () => {
+  console.log("Run to End clicked");
+});
+
+document.getElementById("stopBtn").addEventListener("click", () => {
+  console.log("Stop clicked");
+});
+
+
 document.querySelectorAll(".snip").forEach(btn => {
   btn.addEventListener("click", () => {
     const raw = btn.getAttribute("data-snippet") || "";

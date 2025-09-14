@@ -116,12 +116,15 @@
       <div id="output" class="pane" aria-live="polite"></div>
       <div class="status" id="runtimeStatus">Pyodide not loaded</div>
 
+        <!-- Variables -->
       <header><div class="title">Variables</div></header>
-      <div id="variables" class="pane"
-           style="font-family: var(--mono); font-size: 13px; padding: 8px;
-                  background:#f9f9fb; border-top:1px solid var(--border);
-                  max-height:150px; overflow:auto;">
-        (no variables)
+      <div class="var-toolbar">
+        <button id="stepBtn">Step</button>
+        <button id="runToEndBtn">Run to End</button>
+        <button id="stopBtn">Stop</button>
+      </div>
+      <div id="variables" class="pane" aria-live="polite"
+           style="font-family: var(--mono); font-size: 13px; padding: 8px; background:#f9f9fb; border-top:1px solid var(--border); max-height:150px; overflow:auto;">
       </div>
     </section>
   </div>

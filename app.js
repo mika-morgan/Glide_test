@@ -48,15 +48,15 @@ function setOutput(text) {
 
     // input() -> JS prompt
     await pyodide.runPythonAsync(`
-import builtins, js
-def _glide_input(prompt=''):
-    v = js.window.prompt(str(prompt), "")
-    if v is None:
-        raise KeyboardInterrupt("Input cancelled")
-    return str(v)
-builtins.input = _glide_input
-del _glide_input
-    `);
+    import builtins, js
+    def _glide_input(prompt=''):
+        v = js.window.prompt(str(prompt), "")
+        if v is None:
+            raise KeyboardInterrupt("Input cancelled")
+        return str(v)
+    builtins.input = _glide_input
+    del _glide_input
+        `);
 
     pyReady = true;
     runtimeStatus.textContent = "Python ready";
@@ -79,6 +79,8 @@ runBtn.addEventListener('click', async () => {
     await pyodide.runPythonAsync(`import sys, traceback`);
     await pyodide.runPythonAsync(code);
     editorStatus.textContent = "Done";
+    updateVariables();
+
   } catch (e) {
     appendOutput((e && e.message ? e.message : String(e)) + "\n");
     editorStatus.textContent = "Error";
@@ -146,6 +148,31 @@ function insertSnippet(snippet) {
   const startLine = endPos.line - insertedLines;
   for (let i = startLine; i <= endPos.line; i++) {
     editor.indentLine(i, "smart");
+  }
+}
+
+function updateVariables() {
+  if (!pyReady) return;
+  try {
+    // Get global variables as a dictionary
+    const vars = pyodide.runPython(`
+      import builtins
+      {k: repr(v) for k, v in globals().items()
+       if not k.startswith("__") and k not in dir(builtins)}
+    `);
+
+    const varsEl = document.getElementById("variables");
+    varsEl.textContent = "";
+
+    if (Object.keys(vars).length === 0) {
+      varsEl.textContent = "(no variables)";
+    } else {
+      for (const [k, v] of Object.entries(vars)) {
+        varsEl.textContent += `${k} = ${v}\n`;
+      }
+    }
+  } catch (e) {
+    console.error("Error updating variables:", e);
   }
 }
 

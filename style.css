@@ -74,6 +74,13 @@ button:disabled { opacity: 0.6; cursor: not-allowed; }
   background: #f0f0f5;
 }
 
+#variables {
+  resize: vertical;      /* allow vertical drag */
+  overflow: auto;        /* show scrollbars if needed */
+  min-height: 50px;      /* prevent collapsing too small */
+  max-height: 400px;     /* prevent it from overtaking the whole screen */
+}
+
 .status {
   padding: 8px 12px; font-size: 12px; color: #666;
   border-top: 1px solid var(--border);

@@ -89,7 +89,7 @@
   }
   
   .toolbox .section > summary {
-    list-style: none;          /* remove default triangle */
+    list-style: none;          
     cursor: pointer;
     margin: 0;
     padding: 10px 12px;
@@ -113,7 +113,6 @@
     transform: rotate(90deg);
   }
   
-  /* Keep the buttons area looking the same */
   .toolbox .group {
     padding: 10px;
     display: grid;
@@ -396,62 +395,65 @@ print("Hello, world!")
 
 
     // --- Download Code ---
-   if (downloadBtn) {
-  downloadBtn.addEventListener('click', () => {
-    let code = editor.getValue();
+    if (downloadBtn) {
+      downloadBtn.addEventListener('click', () => {
+        let code = editor.getValue();
 
-    // Append a footer once, with a preceding blank line if needed
-    const footer = '\n\n# Written using GLIDE\n';
-    if (!code.endsWith('\n') && code.length) code += '\n';
-    if (!code.includes('# Written using GLIDE')) code += footer;
+        // Append a footer once, with a preceding blank line if needed
+        const footer = '\n\n# Written using GLIDE\n';
+        if (!code.endsWith('\n') && code.length) code += '\n';
+        if (!code.includes('# Written using GLIDE')) code += footer;
 
-    const suggested = 'glide_code.py';
-    const name = (prompt('File name for download:', suggested) || suggested).trim();
-    const filename = name.toLowerCase().endsWith('.py') ? name : `${name}.py`;
+        const suggested = 'glide_code.py';
+        const name = (prompt('File name for download:', suggested) || suggested).trim();
+        const filename = name.toLowerCase().endsWith('.py') ? name : `${name}.py`;
 
-    const blob = new Blob([code], { type: 'text/x-python;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
+        const blob = new Blob([code], { type: 'text/x-python;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
 
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
 
-    URL.revokeObjectURL(url);
-  });
-}
+        URL.revokeObjectURL(url);
+      });
+    }
 
     // --- Persist toolbox open/closed state ---
-(function persistToolbox() {
-  const KEY = "glide.toolbox.state.v1";
-  let state = {};
-  try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch {}
+    (function persistToolbox() {
+      const KEY = "glide.toolbox.state.v1";
+      let state = {};
+      try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch {}
 
-  // Apply saved state on load
-  document.querySelectorAll(".toolbox .section").forEach(sec => {
-    const k = sec.getAttribute("data-key");
-    if (k && typeof state[k] === "boolean") sec.open = state[k];
-    // Save when toggled
-    sec.addEventListener("toggle", () => {
-      state[k] = sec.open;
-      localStorage.setItem(KEY, JSON.stringify(state));
-    });
-  });
-})();
+      // Apply saved state on load
+      document.querySelectorAll(".toolbox .section").forEach(sec => {
+        const k = sec.getAttribute("data-key");
+        if (k && typeof state[k] === "boolean") sec.open = state[k];
+        // Save when toggled
+        sec.addEventListener("toggle", () => {
+          state[k] = sec.open;
+          localStorage.setItem(KEY, JSON.stringify(state));
+        });
+      });
+    })();
 
+    // --- Variables pane updater ---
     function updateVariables() {
       if (!pyReady) return;
       try {
         // Run small Python snippet to grab globals as strings
         const vars = pyodide.runPython(`
           import builtins
-          {k: repr(v) for k,v in globals().items() if not k.startswith("__") and k not in dir(builtins)}
-        `);
+          {k: repr(v) for k,v in globals().items()
+           if not k.startswith("__") and k not in dir(builtins)}
+        `).toJs();   // convert PyProxy to JS object
+
         const varsEl = document.getElementById("variables");
         varsEl.textContent = "";
-    
+
         if (Object.keys(vars).length === 0) {
           varsEl.textContent = "(no variables)";
         } else {
@@ -464,7 +466,6 @@ print("Hello, world!")
       }
     }
 
-
     // --- Toolbox insertion ---
     function insertSnippet(snippet) {
       const doc = editor.getDoc();
@@ -473,30 +474,33 @@ print("Hello, world!")
       const lineText = doc.getLine(cursor.line);
       const needsLeadingNL = lineText.slice(0, cursor.ch).trim().length > 0 ? "\n" : "";
       doc.replaceRange(needsLeadingNL + snippet, cursor);
-      // Place cursor smartly: if snippet ends with a newline, keep caret after it
-      const endPos = doc.getCursor();
-      editor.focus();
 
-      // Optional: auto-indent the block we just inserted
+      // Auto-indent the block we just inserted
+      const endPos = doc.getCursor();
       const insertedLines = snippet.split("\n").length - 1;
       const startLine = endPos.line - insertedLines;
       for (let i = startLine; i <= endPos.line; i++) {
         editor.indentLine(i, "smart");
       }
+
+      editor.focus();
     }
 
-    document.querySelectorAll(".snip").forEach(btn => {
+    // Attach handlers once DOM is ready
+    window.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".snip").forEach(btn => {
         btn.addEventListener("click", () => {
-            const raw = btn.getAttribute("data-snippet") || "";
-            // Turn the literal \n and \t into actual newline/tab characters
-            const snippet = raw.replace(/\\n/g, "\n").replace(/\\t/g, "\t");
-            insertSnippet(snippet);
-  });
-});
-
+          const raw = btn.getAttribute("data-snippet") || "";
+          // Turn the literal \n and \t into actual newline/tab characters
+          const snippet = raw.replace(/\\n/g, "\n").replace(/\\t/g, "\t");
+          insertSnippet(snippet);
+        });
+      });
+    });
   </script>
 </body>
 </html>
+
 
 
 

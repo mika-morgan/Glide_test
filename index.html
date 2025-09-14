@@ -14,33 +14,6 @@
 
   <!-- Pyodide -->
   <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
-
-  <style>
-    /* Add layout adjustment here so you don’t have to hunt in style.css yet */
-    .wrap {
-      display: grid;
-      grid-template-columns: 280px 1fr 1fr;
-      gap: 12px;
-      align-items: stretch;
-      height: calc(100vh - 80px);
-    }
-    .right-pane {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    #variables {
-      font-family: var(--mono);
-      font-size: 13px;
-      padding: 8px;
-      background:#f9f9fb;
-      border-top:1px solid var(--border);
-      resize: vertical;
-      min-height: 50px;
-      max-height: 300px;
-      overflow:auto;
-    }
-  </style>
 </head>
 <body>
   <header>
@@ -71,8 +44,8 @@
           <button class="snip" data-snippet='x = 20 // 3\nprint("Result:", x)\n'>Integer Division</button>
           <button class="snip" data-snippet='x = 10 % 3\nprint("Result:", x)\n'>Remainder</button>
           <button class="snip" data-snippet='x = 2 ** 3\nprint("Power:", x)\n'>Exponentiation</button>
-          <button class="snip" data-snippet='x = 1\nx += 1\nprint(x)\n'>Increment by value</button>
-          <button class="snip" data-snippet='x = 2\nx -= 1\nprint(x)\n'>Decrement by value</button>
+          <button class="snip" data-snippet='x = 1\nx += 1\nprint(x)\n'>Increment</button>
+          <button class="snip" data-snippet='x = 2\nx -= 1\nprint(x)\n'>Decrement</button>
         </div>
       </details>
 
@@ -134,10 +107,10 @@
       <div class="status" id="editorStatus">Ready</div>
     </section>
 
-    <!-- Right side: Output + Variables stacked -->
-    <div class="right-pane">
+    <!-- Right Column: Output + Variables -->
+    <div class="right-col">
       <!-- Output -->
-      <section class="card">
+      <section class="card output-card">
         <header>
           <div class="title">Output</div>
           <button id="clearBtn">Clear Output</button>
@@ -147,7 +120,7 @@
       </section>
 
       <!-- Variables -->
-      <section class="card">
+      <section class="card variables-card">
         <header>
           <div class="title">Variables</div>
           <div class="var-toolbar">

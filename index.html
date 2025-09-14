@@ -14,6 +14,33 @@
 
   <!-- Pyodide -->
   <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
+
+  <style>
+    /* Add layout adjustment here so you don’t have to hunt in style.css yet */
+    .wrap {
+      display: grid;
+      grid-template-columns: 280px 1fr 1fr;
+      gap: 12px;
+      align-items: stretch;
+      height: calc(100vh - 80px);
+    }
+    .right-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    #variables {
+      font-family: var(--mono);
+      font-size: 13px;
+      padding: 8px;
+      background:#f9f9fb;
+      border-top:1px solid var(--border);
+      resize: vertical;
+      min-height: 50px;
+      max-height: 300px;
+      overflow:auto;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -107,32 +134,32 @@
       <div class="status" id="editorStatus">Ready</div>
     </section>
 
-    <!-- Output -->
-  <section class="card">
-    <header>
-      <div class="title">Output</div>
-      <button id="clearBtn">Clear Output</button>
-    </header>
-    <div id="output" class="pane" aria-live="polite"></div>
-    <div class="status" id="runtimeStatus">Pyodide not loaded</div>
-  </section>
+    <!-- Right side: Output + Variables stacked -->
+    <div class="right-pane">
+      <!-- Output -->
+      <section class="card">
+        <header>
+          <div class="title">Output</div>
+          <button id="clearBtn">Clear Output</button>
+        </header>
+        <div id="output" class="pane" aria-live="polite"></div>
+        <div class="status" id="runtimeStatus">Pyodide not loaded</div>
+      </section>
 
-  <!-- Variables (NEW PANE) -->
-  <section class="card">
-    <header>
-      <div class="title">Variables</div>
-      <div class="var-toolbar">
-        <button id="stepBtn">Step</button>
-        <button id="runToEndBtn">Run to End</button>
-        <button id="stopBtn">Stop</button>
-      </div>
-    </header>
-    <div id="variables" class="pane" aria-live="polite"
-         style="font-family: var(--mono); font-size: 13px; padding: 8px;
-                background:#f9f9fb; border-top:1px solid var(--border);
-                max-height:150px; overflow:auto;">
+      <!-- Variables -->
+      <section class="card">
+        <header>
+          <div class="title">Variables</div>
+          <div class="var-toolbar">
+            <button id="stepBtn">Step</button>
+            <button id="runToEndBtn">Run to End</button>
+            <button id="stopBtn">Stop</button>
+          </div>
+        </header>
+        <div id="variables" class="pane" aria-live="polite"></div>
+      </section>
     </div>
-  </section>
+  </div>
 
   <!-- CodeMirror -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>

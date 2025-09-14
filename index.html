@@ -370,26 +370,26 @@ print("Hello, world!")
 
     // --- Run/Clear ---
     runBtn.addEventListener('click', async () => {
-  if (!pyReady) {
-    appendOutput("Runtime not ready yet.\n");
-    return;
-  }
-  runBtn.disabled = true;
-  editorStatus.textContent = "Running…";
-  try {
-    const code = editor.getValue();
-    await pyodide.runPythonAsync(`import sys, traceback`);
-    await pyodide.runPythonAsync(code);
-    editorStatus.textContent = "Done";
-    updateVariables();
-  } catch (e) {
-    appendOutput((e && e.message ? e.message : String(e)) + "\n");
-    editorStatus.textContent = "Error";
-    updateVariables(); 
-  } finally {
-    runBtn.disabled = false;
-  }
-});
+    if (!pyReady) {
+      appendOutput("Runtime not ready yet.\n");
+      return;
+    }
+    runBtn.disabled = true;
+    editorStatus.textContent = "Running…";
+    try {
+      const code = editor.getValue();
+      await pyodide.runPythonAsync(`import sys, traceback`);
+      await pyodide.runPythonAsync(code);
+      editorStatus.textContent = "Done";
+      await updateVariables();   // <-- await the async version
+    } catch (e) {
+      appendOutput((e && e.message ? e.message : String(e)) + "\n");
+      editorStatus.textContent = "Error";
+    }
+ finally {
+      runBtn.disabled = false;
+    }
+  });
 
 
     clearBtn.addEventListener('click', () => {
@@ -445,28 +445,31 @@ print("Hello, world!")
     })();
 
     // --- Variables pane updater ---
-    function updateVariables() {
-      if (!pyReady) return;
+    async function updateVariables() {
+      if (!pyReady || !pyodide) return;
       try {
-        // Run small Python snippet to grab globals as strings
-        const vars = pyodide.runPython(`
+        const vars = await pyodide.runPythonAsync(`
           import builtins
           {k: repr(v) for k,v in globals().items()
            if not k.startswith("__") and k not in dir(builtins)}
-        `).toJs();   // convert PyProxy to JS object
-
+        `);
+    
+        const jsVars = vars.toJs();  // convert PyProxy → JS object
+        vars.destroy();              // free PyProxy
+    
         const varsEl = document.getElementById("variables");
         varsEl.textContent = "";
-
-        if (Object.keys(vars).length === 0) {
+    
+        if (Object.keys(jsVars).length === 0) {
           varsEl.textContent = "(no variables)";
         } else {
-          for (const [k, v] of Object.entries(vars)) {
+          for (const [k, v] of Object.entries(jsVars)) {
             varsEl.textContent += `${k} = ${v}\n`;
           }
         }
       } catch (e) {
-        console.error("Error updating variables:", e);
+        console.warn("Variables not available:", e);
+        document.getElementById("variables").textContent = "(no variables)";
       }
     }
 

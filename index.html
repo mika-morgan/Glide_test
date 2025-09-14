@@ -22,93 +22,77 @@
 
   <div class="wrap">
     <!-- Toolbox -->
-  <aside class="card toolbox" aria-label="Toolbox">
-    <header><div class="title">Toolbox</div></header>
-  
-    <!-- Basics -->
-    <details class="section" data-key="Basics" open>
-      <summary>Basics</summary>
-      <div class="group">
-        <button class="snip" data-snippet='print("Hello, world!")\n'>
-          print(...)
-          <kbd>Basics</kbd>
-        </button>
-        <button class="snip" data-snippet='name = input("Your name: ")\nprint("Hello,", name)\n'>
-          input() + print()
-          <kbd>Basics</kbd>
-        </button>
-        <button class="snip" data-snippet='x = 42  # variable\nprint(x)\n'>
-          Make a variable
-          <kbd>Basics</kbd>
-        </button>
-      </div>
-    </details>
-  
-    <!-- Math -->
-    <details class="section" data-key="Math" open>
-      <summary>Math Operations</summary>
-      <div class="group">
-        <button class="snip" data-snippet='x = 5 + 3\nprint("Result:", x)\n'>Addition</button>
-        <button class="snip" data-snippet='x = 10 - 4\nprint("Result:", x)\n'>Subtraction</button>
-        <button class="snip" data-snippet='x = 6 * 7\nprint("Result:", x)\n'>Multiplication</button>
-        <button class="snip" data-snippet='x = 20 / 4\nprint("Result:", x)\n'>Division</button>
-        <button class="snip" data-snippet='x = 20 // 3\nprint("Result:", x)\n'>Integer Division</button>
-        <button class="snip" data-snippet='x = 10 % 3\nprint("Result:", x)\n'>Remainder</button>
-        <button class="snip" data-snippet='x = 2 ** 3\nprint("Power:", x)\n'>Exponentiation</button>
-        <button class="snip" data-snippet='x = 1\nx += 1\nprint(x)\n'>Increment</button>
-        <button class="snip" data-snippet='x = 2\nx -= 1\nprint(x)\n'>Decrement</button>
-      </div>
-    </details>
-  
-    <!-- Logical Operators -->
-    <details class="section" data-key="LogicalOps" open>
-      <summary>Logical Operators</summary>
-      <div class="group">
-        <button class="snip" data-snippet='a = True\nb = False\nprint("Result:", a and b)\n'>and</button>
-        <button class="snip" data-snippet='a = True\nb = False\nprint("Result:", a or b)\n'>or</button>
-        <button class="snip" data-snippet='a = True\nprint("Result:", not a)\n'>not</button>
-      </div>
-    </details>
-  
-    <!-- Conditionals -->
-    <details class="section" data-key="Conditionals" open>
-      <summary>Conditionals</summary>
-      <div class="group">
-        <button class="snip" data-snippet='x = int(input("Enter a number: "))\nif x > 0:\n    print("positive")\n'>if</button>
-        <button class="snip" data-snippet='x = int(input("Enter a number: "))\nif x % 2 == 0:\n    print("even")\nelse:\n    print("odd")\n'>if / else</button>
-        <button class="snip" data-snippet='score = int(input("Score 0-100: "))\nif score >= 90:\n    print("A")\nelif score >= 80:\n    print("B")\nelif score >= 70:\n    print("C")\nelse:\n    print("Keep going!")\n'>if / elif / else</button>
-      </div>
-    </details>
-  
-    <!-- Loops -->
-    <details class="section" data-key="Loops" open>
-      <summary>Loops</summary>
-      <div class="group">
-        <button class="snip" data-snippet='for i in range(5):\n    print("i =", i)\n'>for range(...)</button>
-        <button class="snip" data-snippet='n = int(input("How many? "))\nwhile n > 0:\n    print(n)\n    n -= 1\n'>while</button>
-        <button class="snip" data-snippet='items = ["a","b","c"]\nfor item in items:\n    print(item)\n'>for … in list</button>
-      </div>
-    </details>
-  
-    <!-- Lists -->
-    <details class="section" data-key="Lists" open>
-      <summary>Lists</summary>
-      <div class="group">
-        <button class="snip" data-snippet='my_list = [1, 2, 3]\nprint(my_list)\n'>Make a List</button>
-        <button class="snip" data-snippet='my_list = [1, 2, 3]\nmy_list.append(4)\nprint(my_list)\n'>Add to a List</button>
-        <button class="snip" data-snippet='my_list = [1, 2, 3, 4]\nmy_list.remove(2)\nprint(my_list)\n'>Remove from a List</button>
-      </div>
-    </details>
-  
-    <!-- Functions -->
-    <details class="section" data-key="Functions" open>
-      <summary>Functions</summary>
-      <div class="group">
-        <button class="snip" data-snippet='def greet(name):\n    print("Hello,", name)\n\ngreet("Glide")\n'>def + call</button>
-        <button class="snip" data-snippet='def add(a, b):\n    return a + b\n\nprint(add(2, 3))\n'>return value</button>
-      </div>
-    </details>
-  </aside>
+    <aside class="card toolbox" aria-label="Toolbox">
+      <header><div class="title">Toolbox</div></header>
+
+      <details class="section" data-key="Basics" open>
+        <summary>BASICS</summary>
+        <div class="group">
+          <button class="snip" data-snippet='print("Hello, world!")\n'>print(...)</button>
+          <button class="snip" data-snippet='name = input("Your name: ")\nprint("Hello,", name)\n'>input() + print()</button>
+          <button class="snip" data-snippet='x = 42  # variable\nprint(x)\n'>Make a variable</button>
+        </div>
+      </details>
+
+      <details class="section" data-key="Math" open>
+        <summary>MATH OPERATIONS</summary>
+        <div class="group">
+          <button class="snip" data-snippet='x = 5 + 3\nprint("Result:", x)\n'>Addition</button>
+          <button class="snip" data-snippet='x = 10 - 4\nprint("Result:", x)\n'>Subtraction</button>
+          <button class="snip" data-snippet='x = 6 * 7\nprint("Result:", x)\n'>Multiplication</button>
+          <button class="snip" data-snippet='x = 20 / 4\nprint("Result:", x)\n'>Division</button>
+          <button class="snip" data-snippet='x = 20 // 3\nprint("Result:", x)\n'>Integer Division</button>
+          <button class="snip" data-snippet='x = 10 % 3\nprint("Result:", x)\n'>Remainder</button>
+          <button class="snip" data-snippet='x = 2 ** 3\nprint("Power:", x)\n'>Exponentiation</button>
+          <button class="snip" data-snippet='x = 1\nx += 1\nprint(x)\n'>Increment</button>
+          <button class="snip" data-snippet='x = 2\nx -= 1\nprint(x)\n'>Decrement</button>
+        </div>
+      </details>
+
+      <details class="section" data-key="LogicalOps" open>
+        <summary>LOGICAL OPERATORS</summary>
+        <div class="group">
+          <button class="snip" data-snippet='a = True\nb = False\nprint("Result:", a and b)\n'>and</button>
+          <button class="snip" data-snippet='a = True\nb = False\nprint("Result:", a or b)\n'>or</button>
+          <button class="snip" data-snippet='a = True\nprint("Result:", not a)\n'>not</button>
+        </div>
+      </details>
+
+      <details class="section" data-key="Conditionals" open>
+        <summary>CONDITIONALS</summary>
+        <div class="group">
+          <button class="snip" data-snippet='x = int(input("Enter a number: "))\nif x > 0:\n    print("positive")\n'>if</button>
+          <button class="snip" data-snippet='x = int(input("Enter a number: "))\nif x % 2 == 0:\n    print("even")\nelse:\n    print("odd")\n'>if / else</button>
+          <button class="snip" data-snippet='score = int(input("Score 0-100: "))\nif score >= 90:\n    print("A")\nelif score >= 80:\n    print("B")\nelif score >= 70:\n    print("C")\nelse:\n    print("Keep going!")\n'>if / elif / else</button>
+        </div>
+      </details>
+
+      <details class="section" data-key="Loops" open>
+        <summary>LOOPS</summary>
+        <div class="group">
+          <button class="snip" data-snippet='for i in range(5):\n    print("i =", i)\n'>for range(...)</button>
+          <button class="snip" data-snippet='n = int(input("How many? "))\nwhile n > 0:\n    print(n)\n    n -= 1\n'>while</button>
+          <button class="snip" data-snippet='items = ["a","b","c"]\nfor item in items:\n    print(item)\n'>for … in list</button>
+        </div>
+      </details>
+
+      <details class="section" data-key="Lists" open>
+        <summary>LISTS</summary>
+        <div class="group">
+          <button class="snip" data-snippet='my_list = [1, 2, 3]\nprint(my_list)\n'>Make a List</button>
+          <button class="snip" data-snippet='my_list = [1, 2, 3]\nmy_list.append(4)\nprint(my_list)\n'>Add to a List</button>
+          <button class="snip" data-snippet='my_list = [1, 2, 3, 4]\nmy_list.remove(2)\nprint(my_list)\n'>Remove from a List</button>
+        </div>
+      </details>
+
+      <details class="section" data-key="Functions" open>
+        <summary>FUNCTIONS</summary>
+        <div class="group">
+          <button class="snip" data-snippet='def greet(name):\n    print("Hello,", name)\n\ngreet("Glide")\n'>def + call</button>
+          <button class="snip" data-snippet='def add(a, b):\n    return a + b\n\nprint(add(2, 3))\n'>return value</button>
+        </div>
+      </details>
+    </aside>
 
     <!-- Editor -->
     <section class="card">
@@ -123,31 +107,28 @@
       <div class="status" id="editorStatus">Ready</div>
     </section>
 
-    <!-- Right Column: Output + Variables -->
-    <div class="right-col">
-      <!-- Output -->
-      <section class="card output-card">
-        <header>
-          <div class="title">Output</div>
-          <button id="clearBtn">Clear Output</button>
-        </header>
-        <div id="output" class="pane" aria-live="polite"></div>
-        <div class="status" id="runtimeStatus">Pyodide not loaded</div>
-      </section>
+    <!-- Output -->
+    <section class="card">
+      <header>
+        <div class="title">Output</div>
+        <button id="clearBtn">Clear Output</button>
+      </header>
+      <div id="output" class="pane" aria-live="polite"></div>
+      <div class="status" id="runtimeStatus">Pyodide not loaded</div>
+    </section>
 
-      <!-- Variables -->
-      <section class="card variables-card">
-        <header>
-          <div class="title">Variables</div>
-          <div class="var-toolbar">
-            <button id="stepBtn">Step</button>
-            <button id="runToEndBtn">Run to End</button>
-            <button id="stopBtn">Stop</button>
-          </div>
-        </header>
-        <div id="variables" class="pane" aria-live="polite"></div>
-      </section>
-    </div>
+    <!-- Variables -->
+    <section class="card">
+      <header>
+        <div class="title">Variables</div>
+        <div class="var-toolbar">
+          <button id="stepBtn">Step</button>
+          <button id="runToEndBtn">Run to End</button>
+          <button id="stopBtn">Stop</button>
+        </div>
+      </header>
+      <div id="variables" class="pane" aria-live="polite"></div>
+    </section>
   </div>
 
   <!-- CodeMirror -->

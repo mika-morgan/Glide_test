@@ -287,9 +287,13 @@
     
       <!-- Variables -->
       <header><div class="title">Variables</div></header>
-      <div id="variables" class="pane" aria-live="polite" style="font-family: var(--mono); font-size: 13px; padding: 8px; background:#f9f9fb; border-top:1px solid var(--border); max-height:150px; overflow:auto;"></div>
+      <div id="variables" class="pane"
+           style="font-family: var(--mono); font-size: 13px; padding: 8px;
+                  background:#f9f9fb; border-top:1px solid var(--border);
+                  max-height:150px; overflow:auto;">
+        (no variables)
+      </div>
     </section>
-  </div>
 
   <script>
     // --- CodeMirror setup ---
@@ -343,14 +347,14 @@ print("Hello, world!")
 
         // input() -> JS prompt
         await pyodide.runPythonAsync(`
-import builtins, js
-def _glide_input(prompt=''):
-    v = js.window.prompt(str(prompt), "")
-    if v is None:
-        raise KeyboardInterrupt("Input cancelled")
-    return str(v)
-builtins.input = _glide_input
-del _glide_input
+        import builtins, js
+        def _glide_input(prompt=''):
+            v = js.window.prompt(str(prompt), "")
+            if v is None:
+                raise KeyboardInterrupt("Input cancelled")
+            return str(v)
+        builtins.input = _glide_input
+        del _glide_input
         `);
 
         pyReady = true;
@@ -363,27 +367,33 @@ del _glide_input
 
     // --- Run/Clear ---
     runBtn.addEventListener('click', async () => {
-      if (!pyReady) {
-        appendOutput("Runtime not ready yet.\n");
-        return;
-      }
-      runBtn.disabled = true;
-      editorStatus.textContent = "Running…";
-      try {
-        const code = editor.getValue();
-        await pyodide.runPythonAsync(`import sys, traceback`);
-        await pyodide.runPythonAsync(code);
-        editorStatus.textContent = "Done";
-        updateVariables();
-      } catch (e) {
-        appendOutput((e && e.message ? e.message : String(e)) + "\n");
-        editorStatus.textContent = "Error";
-      } finally {
-        runBtn.disabled = false;
-      }
+  if (!pyReady) {
+    appendOutput("Runtime not ready yet.\n");
+    return;
+  }
+  runBtn.disabled = true;
+  editorStatus.textContent = "Running…";
+  try {
+    const code = editor.getValue();
+    await pyodide.runPythonAsync(`import sys, traceback`);
+    await pyodide.runPythonAsync(code);
+    editorStatus.textContent = "Done";
+    updateVariables();
+  } catch (e) {
+    appendOutput((e && e.message ? e.message : String(e)) + "\n");
+    editorStatus.textContent = "Error";
+    updateVariables(); 
+  } finally {
+    runBtn.disabled = false;
+  }
+});
+
+
+    clearBtn.addEventListener('click', () => {
+      setOutput("");
+      document.getElementById("variables").textContent = "(no variables)";
     });
 
-    clearBtn.addEventListener('click', () => setOutput(""));
 
     // --- Download Code ---
    if (downloadBtn) {

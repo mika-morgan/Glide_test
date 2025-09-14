@@ -280,7 +280,10 @@
 
     <!-- Output -->
     <section class="card">
-      <header><div class="title">Output</div></header>
+      <header>
+        <div class="title">Output</div>
+        <button id="clearBtn">Clear Output</button>
+      </header>
       <div id="output" class="pane" aria-live="polite"></div>
       <div class="status" id="runtimeStatus">Pyodide not loaded</div>
     
@@ -293,6 +296,7 @@
         (no variables)
       </div>
     </section>
+
 
   <script>
     // --- CodeMirror setup ---

@@ -5,148 +5,15 @@
   <title>GLIDE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- CodeMirror 5 -->
+  <!-- CodeMirror -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/neo.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+
+  <!-- Our CSS -->
+  <link rel="stylesheet" href="style.css">
 
   <!-- Pyodide -->
   <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
-
-  <style>
-    :root {
-      --bg: #f7f7fb;
-      --pane: #ffffff;
-      --border: #e3e3ee;
-      --text: #222;
-      --accent: #5a67d8;
-      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0; padding: 16px;
-      background: var(--bg); color: var(--text);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-    }
-    header {
-      display: flex; gap: 12px; align-items: center; margin-bottom: 12px;
-    }
-    header h1 { font-size: 18px; font-weight: 600; margin: 0; }
-    .wrap {
-      display: grid; grid-template-columns: 280px 1fr 1fr; gap: 12px; align-items: stretch;
-      height: calc(100vh - 80px);
-    }
-    .card {
-      background: var(--pane); border: 1px solid var(--border);
-      border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
-    }
-    .card header {
-      padding: 10px 12px; border-bottom: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .card header .title { font-weight: 600; }
-    .toolbar { display: flex; gap: 8px; }
-    button {
-      border: 1px solid var(--border); background: #fff; color: var(--text);
-      padding: 6px 12px; border-radius: 8px; cursor: pointer; font-weight: 600;
-    }
-    button.primary { background: var(--accent); color: white; border-color: var(--accent); }
-    button:disabled { opacity: 0.6; cursor: not-allowed; }
-    #editor { height: 100%; }
-    .CodeMirror {
-      height: 100%;
-      font-family: var(--mono);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-    .pane { padding: 0; height: 100%; display: flex; flex-direction: column; }
-    #output {
-      flex: 1 1 auto;
-      font-family: var(--mono);
-      white-space: pre-wrap;
-      overflow: auto;
-      padding: 12px;
-      background: #0b0e14;
-      color: #e6edf3;
-    }
-    .status {
-      padding: 8px 12px; font-size: 12px; color: #666;
-      border-top: 1px solid var(--border);
-      background: #fafafc;
-    }
-
-      /* Toolbox styles */
-      .toolbox {
-        padding: 0; display: flex; flex-direction: column;
-      }
-      .toolbox .section {
-        border-bottom: 1px solid var(--border);
-      }
-      /* Collapsible sections */
-  .toolbox .section {
-    border-bottom: 1px solid var(--border);
-  }
-  
-  .toolbox .section > summary {
-    list-style: none;          
-    cursor: pointer;
-    margin: 0;
-    padding: 10px 12px;
-    font-size: 13px;
-    letter-spacing: .02em;
-    text-transform: uppercase;
-    color: #555;
-    background: #fafbff;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; gap: 8px;
-  }
-  
-  .toolbox .section > summary::before {
-    content: "▸";              /* caret */
-    transition: transform 0.15s ease;
-    font-size: 12px;
-    color: #777;
-  }
-  
-  .toolbox .section[open] > summary::before {
-    transform: rotate(90deg);
-  }
-  
-  .toolbox .group {
-    padding: 10px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-
-    .toolbox .group {
-      padding: 10px;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-    }
-    .snip {
-      text-align: left;
-      font-size: 13px;
-      display: inline-flex; align-items: center; justify-content: space-between;
-      gap: 8px;
-    }
-    .snip kbd {
-      font-family: var(--mono); font-size: 11px;
-      background: #f1f1f7; border: 1px solid var(--border); border-bottom-color: #d7d7e5;
-      padding: 1px 4px; border-radius: 6px; color: #444;
-    }
-
-    @media (max-width: 1100px) {
-      .wrap { grid-template-columns: 1fr 1fr; }
-      .toolbox { order: -1; }
-    }
-    @media (max-width: 900px) {
-      .wrap { grid-template-columns: 1fr; height: auto; }
-      .card { min-height: 45vh; }
-    }
-  </style>
 </head>
 <body>
   <header>
@@ -161,104 +28,68 @@
       <details class="section" data-key="Basics" open>
         <summary>Basics</summary>
         <div class="group">
-          <button class="snip" data-snippet='print("Hello, world!")\n'>
-            print(...)
-            <kbd>Basics</kbd>
-          </button>
-          <button class="snip" data-snippet='name = input("Your name: ")\nprint("Hello,", name)\n'>
-            input() + print()
-            <kbd>Basics</kbd>
-          </button>
-          <button class="snip" data-snippet='x = 42  # variable\nprint(x)\n'>
-            Make a variable
-            <kbd>Basics</kbd>
-          </button>
+          <button class="snip" data-snippet='print("Hello, world!")\n'>print(...)</button>
+          <button class="snip" data-snippet='name = input("Your name: ")\nprint("Hello,", name)\n'>input() + print()</button>
+          <button class="snip" data-snippet='x = 42  # variable\nprint(x)\n'>Make a variable</button>
         </div>
       </details>
 
-      <!-- MATH OPERATIONS -->
-    <details class="section" data-key="Math" open>
-      <summary>Math Operations</summary>
-      <div class="group">
-        <button class="snip" data-snippet='x = 5 + 3\nprint("Result:", x)\n'>Addition</button>
-        <button class="snip" data-snippet='x = 10 - 4\nprint("Result:", x)\n'>Subtraction</button>
-        <button class="snip" data-snippet='x = 6 * 7\nprint("Result:", x)\n'>Multiplication</button>
-        <button class="snip" data-snippet='x = 20 / 4\nprint("Result:", x)\n'>Division</button>
-        <button class="snip" data-snippet='x = 20 // 3\nprint("Result:", x)\n'>Integer Division</button>
-        <button class="snip" data-snippet='x = 10 % 3\nprint("Result:", x)\n'>Remainder</button>
-        <button class="snip" data-snippet='x = 2 ** 3\nprint("Power:", x)\n'>Exponentiation</button>
-        <button class="snip" data-snippet='x = 1\nx += 1\nprint(x)\n'>Increment by value</button>
-        <button class="snip" data-snippet='x = 2\nx -= 1\nprint(x)\n'>Decrement by value</button>
-      </div>
-    </details>
+      <details class="section" data-key="Math" open>
+        <summary>Math Operations</summary>
+        <div class="group">
+          <button class="snip" data-snippet='x = 5 + 3\nprint("Result:", x)\n'>Addition</button>
+          <button class="snip" data-snippet='x = 10 - 4\nprint("Result:", x)\n'>Subtraction</button>
+          <button class="snip" data-snippet='x = 6 * 7\nprint("Result:", x)\n'>Multiplication</button>
+          <button class="snip" data-snippet='x = 20 / 4\nprint("Result:", x)\n'>Division</button>
+          <button class="snip" data-snippet='x = 20 // 3\nprint("Result:", x)\n'>Integer Division</button>
+          <button class="snip" data-snippet='x = 10 % 3\nprint("Result:", x)\n'>Remainder</button>
+          <button class="snip" data-snippet='x = 2 ** 3\nprint("Power:", x)\n'>Exponentiation</button>
+          <button class="snip" data-snippet='x = 1\nx += 1\nprint(x)\n'>Increment by value</button>
+          <button class="snip" data-snippet='x = 2\nx -= 1\nprint(x)\n'>Decrement by value</button>
+        </div>
+      </details>
 
-    <!-- LOGICAL OPERATORS -->
-    <details class="section" data-key="LogicalOps" open>
-      <summary>Logical Operators</summary>
-      <div class="group">
-        <button class="snip" data-snippet='a = True\nb = False\nprint("Result:", a and b)\n'>and</button>
-        <button class="snip" data-snippet='a = True\nb = False\nprint("Result:", a or b)\n'>or</button>
-        <button class="snip" data-snippet='a = True\nprint("Result:", not a)\n'>not</button>
-      </div>
-    </details>
+      <details class="section" data-key="LogicalOps" open>
+        <summary>Logical Operators</summary>
+        <div class="group">
+          <button class="snip" data-snippet='a = True\nb = False\nprint("Result:", a and b)\n'>and</button>
+          <button class="snip" data-snippet='a = True\nb = False\nprint("Result:", a or b)\n'>or</button>
+          <button class="snip" data-snippet='a = True\nprint("Result:", not a)\n'>not</button>
+        </div>
+      </details>
 
       <details class="section" data-key="Conditionals" open>
         <summary>Conditionals</summary>
         <div class="group">
-          <button class="snip" data-snippet='x = int(input("Enter a number: "))\nif x > 0:\n    print("positive")\n'>
-            if
-            <kbd>Cond</kbd>
-          </button>
-          <button class="snip" data-snippet='x = int(input("Enter a number: "))\nif x % 2 == 0:\n    print("even")\nelse:\n    print("odd")\n'>
-            if / else
-            <kbd>Cond</kbd>
-          </button>
-          <button class="snip" data-snippet='score = int(input("Score 0-100: "))\nif score >= 90:\n    print("A")\nelif score >= 80:\n    print("B")\nelif score >= 70:\n    print("C")\nelse:\n    print("Keep going!")\n'>
-            if / elif / else
-            <kbd>Cond</kbd>
-          </button>
+          <button class="snip" data-snippet='x = int(input("Enter a number: "))\nif x > 0:\n    print("positive")\n'>if</button>
+          <button class="snip" data-snippet='x = int(input("Enter a number: "))\nif x % 2 == 0:\n    print("even")\nelse:\n    print("odd")\n'>if / else</button>
+          <button class="snip" data-snippet='score = int(input("Score 0-100: "))\nif score >= 90:\n    print("A")\nelif score >= 80:\n    print("B")\nelif score >= 70:\n    print("C")\nelse:\n    print("Keep going!")\n'>if / elif / else</button>
         </div>
       </details>
 
       <details class="section" data-key="Loops" open>
         <summary>Loops</summary>
         <div class="group">
-          <button class="snip" data-snippet='for i in range(5):\n    print("i =", i)\n'>
-            for range(...)
-            <kbd>Loops</kbd>
-          </button>
-          <button class="snip" data-snippet='n = int(input("How many? "))\nwhile n > 0:\n    print(n)\n    n -= 1\n'>
-            while
-            <kbd>Loops</kbd>
-          </button>
-          <button class="snip" data-snippet='items = ["a","b","c"]\nfor item in items:\n    print(item)\n'>
-            for … in list
-            <kbd>Loops</kbd>
-          </button>
+          <button class="snip" data-snippet='for i in range(5):\n    print("i =", i)\n'>for range(...)</button>
+          <button class="snip" data-snippet='n = int(input("How many? "))\nwhile n > 0:\n    print(n)\n    n -= 1\n'>while</button>
+          <button class="snip" data-snippet='items = ["a","b","c"]\nfor item in items:\n    print(item)\n'>for … in list</button>
         </div>
       </details>
 
-      <!-- LISTS -->
-    <details class="section" data-key="Lists" open>
-      <summary>Lists</summary>
-      <div class="group">
-        <button class="snip" data-snippet='my_list = [1, 2, 3]\nprint(my_list)\n'>Make a List</button>
-        <button class="snip" data-snippet='my_list = [1, 2, 3]\nmy_list.append(4)\nprint(my_list)\n'>Add to a List</button>
-        <button class="snip" data-snippet='my_list = [1, 2, 3, 4]\nmy_list.remove(2)\nprint(my_list)\n'>Remove from a List</button>
-      </div>
-    </details>
+      <details class="section" data-key="Lists" open>
+        <summary>Lists</summary>
+        <div class="group">
+          <button class="snip" data-snippet='my_list = [1, 2, 3]\nprint(my_list)\n'>Make a List</button>
+          <button class="snip" data-snippet='my_list = [1, 2, 3]\nmy_list.append(4)\nprint(my_list)\n'>Add to a List</button>
+          <button class="snip" data-snippet='my_list = [1, 2, 3, 4]\nmy_list.remove(2)\nprint(my_list)\n'>Remove from a List</button>
+        </div>
+      </details>
 
       <details class="section" data-key="Functions" open>
         <summary>Functions</summary>
         <div class="group">
-          <button class="snip" data-snippet='def greet(name):\n    print("Hello,", name)\n\ngreet("Glide")\n'>
-            def + call
-            <kbd>Func</kbd>
-          </button>
-          <button class="snip" data-snippet='def add(a, b):\n    return a + b\n\nprint(add(2, 3))\n'>
-            return value
-            <kbd>Func</kbd>
-          </button>
+          <button class="snip" data-snippet='def greet(name):\n    print("Hello,", name)\n\ngreet("Glide")\n'>def + call</button>
+          <button class="snip" data-snippet='def add(a, b):\n    return a + b\n\nprint(add(2, 3))\n'>return value</button>
         </div>
       </details>
     </aside>
@@ -269,11 +100,9 @@
         <div class="title">Editor (Python)</div>
         <div class="toolbar">
           <button id="runBtn" class="primary">Run ▶</button>
-          <button id="downloadBtn" title="Download editor code as .py">Download</button>
+          <button id="downloadBtn">Download</button>
         </div>
-</header>
-
-
+      </header>
       <div id="editor" class="pane"></div>
       <div class="status" id="editorStatus">Ready</div>
     </section>
@@ -286,8 +115,7 @@
       </header>
       <div id="output" class="pane" aria-live="polite"></div>
       <div class="status" id="runtimeStatus">Pyodide not loaded</div>
-    
-      <!-- Variables -->
+
       <header><div class="title">Variables</div></header>
       <div id="variables" class="pane"
            style="font-family: var(--mono); font-size: 13px; padding: 8px;
@@ -296,223 +124,13 @@
         (no variables)
       </div>
     </section>
+  </div>
 
+  <!-- CodeMirror -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
 
-  <script>
-    // --- CodeMirror setup ---
-    const editor = CodeMirror(document.getElementById('editor'), {
-      value:
-`#Welcome to Glide, an online Python IDE
-#Try snippets from the left or type your own code, then click 'Run'
-
-print("Hello, world!")
-`,
-      mode: "python",
-      theme: "neo",
-      lineNumbers: true,
-      indentUnit: 4,
-      tabSize: 4,
-      indentWithTabs: false,
-      autofocus: true,
-    });
-
-    const runBtn = document.getElementById('runBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const outputEl = document.getElementById('output');
-    const runtimeStatus = document.getElementById('runtimeStatus');
-    const editorStatus = document.getElementById('editorStatus');
-
-    let pyodide = null;
-    let pyReady = false;
-
-    function appendOutput(text) {
-      if (text == null) return;
-      const s = String(text).replace(/\r\n/g, "\n");
-      // If the chunk doesn't end with a newline, add one.
-      const needsNL = s.length && !s.endsWith("\n");
-      outputEl.textContent += needsNL ? s + "\n" : s;
-      outputEl.scrollTop = outputEl.scrollHeight;
-}
-
-    function setOutput(text) {
-      outputEl.textContent = text || "";
-    }
-
-    // --- Load Pyodide ---
-    (async () => {
-      runtimeStatus.textContent = "Loading Python runtime…";
-      try {
-        pyodide = await loadPyodide({
-        stdout: (t) => appendOutput(t + "\n"),
-        stderr: (t) => appendOutput(t + "\n"),
-        });
-
-        // input() -> JS prompt
-        await pyodide.runPythonAsync(`
-        import builtins, js
-        def _glide_input(prompt=''):
-            v = js.window.prompt(str(prompt), "")
-            if v is None:
-                raise KeyboardInterrupt("Input cancelled")
-            return str(v)
-        builtins.input = _glide_input
-        del _glide_input
-        `);
-
-        pyReady = true;
-        runtimeStatus.textContent = "Python ready";
-      } catch (e) {
-        runtimeStatus.textContent = "Failed to load Python";
-        appendOutput("Error loading Pyodide:\n" + (e && e.message ? e.message : e));
-      }
-    })();
-
-    // --- Run/Clear ---
-    runBtn.addEventListener('click', async () => {
-    if (!pyReady) {
-      appendOutput("Runtime not ready yet.\n");
-      return;
-    }
-    runBtn.disabled = true;
-    editorStatus.textContent = "Running…";
-    try {
-      const code = editor.getValue();
-      await pyodide.runPythonAsync(`import sys, traceback`);
-      await pyodide.runPythonAsync(code);
-      editorStatus.textContent = "Done";
-      await updateVariables();   // <-- await the async version
-    } catch (e) {
-      appendOutput((e && e.message ? e.message : String(e)) + "\n");
-      editorStatus.textContent = "Error";
-    }
- finally {
-      runBtn.disabled = false;
-    }
-  });
-
-
-    clearBtn.addEventListener('click', () => {
-      setOutput("");
-      document.getElementById("variables").textContent = "(no variables)";
-    });
-
-
-    // --- Download Code ---
-    if (downloadBtn) {
-      downloadBtn.addEventListener('click', () => {
-        let code = editor.getValue();
-
-        // Append a footer once, with a preceding blank line if needed
-        const footer = '\n\n# Written using GLIDE\n';
-        if (!code.endsWith('\n') && code.length) code += '\n';
-        if (!code.includes('# Written using GLIDE')) code += footer;
-
-        const suggested = 'glide_code.py';
-        const name = (prompt('File name for download:', suggested) || suggested).trim();
-        const filename = name.toLowerCase().endsWith('.py') ? name : `${name}.py`;
-
-        const blob = new Blob([code], { type: 'text/x-python;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-
-        URL.revokeObjectURL(url);
-      });
-    }
-
-    // --- Persist toolbox open/closed state ---
-    (function persistToolbox() {
-      const KEY = "glide.toolbox.state.v1";
-      let state = {};
-      try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch {}
-
-      // Apply saved state on load
-      document.querySelectorAll(".toolbox .section").forEach(sec => {
-        const k = sec.getAttribute("data-key");
-        if (k && typeof state[k] === "boolean") sec.open = state[k];
-        // Save when toggled
-        sec.addEventListener("toggle", () => {
-          state[k] = sec.open;
-          localStorage.setItem(KEY, JSON.stringify(state));
-        });
-      });
-    })();
-
-    // --- Variables pane updater ---
-    async function updateVariables() {
-      if (!pyReady || !pyodide) return;
-      try {
-        const vars = await pyodide.runPythonAsync(`
-          import builtins
-          {k: repr(v) for k,v in globals().items()
-           if not k.startswith("__") and k not in dir(builtins)}
-        `);
-    
-        const jsVars = vars.toJs();  // convert PyProxy → JS object
-        vars.destroy();              // free PyProxy
-    
-        const varsEl = document.getElementById("variables");
-        varsEl.textContent = "";
-    
-        if (Object.keys(jsVars).length === 0) {
-          varsEl.textContent = "(no variables)";
-        } else {
-          for (const [k, v] of Object.entries(jsVars)) {
-            varsEl.textContent += `${k} = ${v}\n`;
-          }
-        }
-      } catch (e) {
-        console.warn("Variables not available:", e);
-        document.getElementById("variables").textContent = "(no variables)";
-      }
-    }
-
-    // --- Toolbox insertion ---
-    function insertSnippet(snippet) {
-      const doc = editor.getDoc();
-      const cursor = doc.getCursor();
-      // Ensure a newline before snippet if cursor is mid-line and preceding text exists
-      const lineText = doc.getLine(cursor.line);
-      const needsLeadingNL = lineText.slice(0, cursor.ch).trim().length > 0 ? "\n" : "";
-      doc.replaceRange(needsLeadingNL + snippet, cursor);
-
-      // Auto-indent the block we just inserted
-      const endPos = doc.getCursor();
-      const insertedLines = snippet.split("\n").length - 1;
-      const startLine = endPos.line - insertedLines;
-      for (let i = startLine; i <= endPos.line; i++) {
-        editor.indentLine(i, "smart");
-      }
-
-      editor.focus();
-    }
-
-    // Attach handlers once DOM is ready
-    window.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll(".snip").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const raw = btn.getAttribute("data-snippet") || "";
-          // Turn the literal \n and \t into actual newline/tab characters
-          const snippet = raw.replace(/\\n/g, "\n").replace(/\\t/g, "\t");
-          insertSnippet(snippet);
-        });
-      });
-    });
-  </script>
+  <!-- Our JS -->
+  <script src="app.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-

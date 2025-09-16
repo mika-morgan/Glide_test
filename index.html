@@ -26,7 +26,7 @@
       <header><div class="title">Toolbox</div></header>
 
       <details class="section" data-key="Basics" open>
-        <summary>BASICS</summary>
+        <summary>Basics</summary>
         <div class="group">
           <button class="snip" data-snippet='print("Hello, world!")\n'>print(...)</button>
           <button class="snip" data-snippet='name = input("Your name: ")\nprint("Hello,", name)\n'>input() + print()</button>
@@ -35,7 +35,7 @@
       </details>
 
       <details class="section" data-key="Math" open>
-        <summary>MATH OPERATIONS</summary>
+        <summary>Math Operations</summary>
         <div class="group">
           <button class="snip" data-snippet='x = 5 + 3\nprint("Result:", x)\n'>Addition</button>
           <button class="snip" data-snippet='x = 10 - 4\nprint("Result:", x)\n'>Subtraction</button>
@@ -44,13 +44,13 @@
           <button class="snip" data-snippet='x = 20 // 3\nprint("Result:", x)\n'>Integer Division</button>
           <button class="snip" data-snippet='x = 10 % 3\nprint("Result:", x)\n'>Remainder</button>
           <button class="snip" data-snippet='x = 2 ** 3\nprint("Power:", x)\n'>Exponentiation</button>
-          <button class="snip" data-snippet='x = 1\nx += 1\nprint(x)\n'>Increment</button>
-          <button class="snip" data-snippet='x = 2\nx -= 1\nprint(x)\n'>Decrement</button>
+          <button class="snip" data-snippet='x = 1\nx += 1\nprint(x)\n'>Increment by value</button>
+          <button class="snip" data-snippet='x = 2\nx -= 1\nprint(x)\n'>Decrement by value</button>
         </div>
       </details>
 
       <details class="section" data-key="LogicalOps" open>
-        <summary>LOGICAL OPERATORS</summary>
+        <summary>Logical Operators</summary>
         <div class="group">
           <button class="snip" data-snippet='a = True\nb = False\nprint("Result:", a and b)\n'>and</button>
           <button class="snip" data-snippet='a = True\nb = False\nprint("Result:", a or b)\n'>or</button>
@@ -59,7 +59,7 @@
       </details>
 
       <details class="section" data-key="Conditionals" open>
-        <summary>CONDITIONALS</summary>
+        <summary>Conditionals</summary>
         <div class="group">
           <button class="snip" data-snippet='x = int(input("Enter a number: "))\nif x > 0:\n    print("positive")\n'>if</button>
           <button class="snip" data-snippet='x = int(input("Enter a number: "))\nif x % 2 == 0:\n    print("even")\nelse:\n    print("odd")\n'>if / else</button>
@@ -68,7 +68,7 @@
       </details>
 
       <details class="section" data-key="Loops" open>
-        <summary>LOOPS</summary>
+        <summary>Loops</summary>
         <div class="group">
           <button class="snip" data-snippet='for i in range(5):\n    print("i =", i)\n'>for range(...)</button>
           <button class="snip" data-snippet='n = int(input("How many? "))\nwhile n > 0:\n    print(n)\n    n -= 1\n'>while</button>
@@ -77,7 +77,7 @@
       </details>
 
       <details class="section" data-key="Lists" open>
-        <summary>LISTS</summary>
+        <summary>Lists</summary>
         <div class="group">
           <button class="snip" data-snippet='my_list = [1, 2, 3]\nprint(my_list)\n'>Make a List</button>
           <button class="snip" data-snippet='my_list = [1, 2, 3]\nmy_list.append(4)\nprint(my_list)\n'>Add to a List</button>
@@ -86,7 +86,7 @@
       </details>
 
       <details class="section" data-key="Functions" open>
-        <summary>FUNCTIONS</summary>
+        <summary>Functions</summary>
         <div class="group">
           <button class="snip" data-snippet='def greet(name):\n    print("Hello,", name)\n\ngreet("Glide")\n'>def + call</button>
           <button class="snip" data-snippet='def add(a, b):\n    return a + b\n\nprint(add(2, 3))\n'>return value</button>
@@ -115,19 +115,14 @@
       </header>
       <div id="output" class="pane" aria-live="polite"></div>
       <div class="status" id="runtimeStatus">Pyodide not loaded</div>
-    </section>
 
-    <!-- Variables -->
-    <section class="card">
-      <header>
-        <div class="title">Variables</div>
-        <div class="var-toolbar">
-          <button id="stepBtn">Step</button>
-          <button id="runToEndBtn">Run to End</button>
-          <button id="stopBtn">Stop</button>
-        </div>
-      </header>
-      <div id="variables" class="pane" aria-live="polite"></div>
+      <header><div class="title">Variables</div></header>
+      <div id="variables" class="pane"
+           style="font-family: var(--mono); font-size: 13px; padding: 8px;
+                  background:#f9f9fb; border-top:1px solid var(--border);
+                  max-height:150px; overflow:auto;">
+        (no variables)
+      </div>
     </section>
   </div>
 
